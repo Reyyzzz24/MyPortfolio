@@ -1,6 +1,6 @@
 const Services = () => {
   return (
-    <section id="services" className="bg-gray-50 dark:bg-gray-800/50 py-24 transition-colors">
+    <section id="services" className="bg-gray-50/80 dark:bg-gray-800/50 py-24 transition-colors">
         <div className="container mx-auto max-w-7xl">
             <div className="text-center mb-16">
                 <h3 className="text-blue-600 font-semibold uppercase tracking-widest text-sm">Services</h3>

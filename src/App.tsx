@@ -9,8 +9,8 @@ import Footer from "./sections/Footer";
 import DesignPhotography from "./pages/DesignPhotography"; 
 import VideoEditing from "./pages/VideoEditing"; 
 import ScrollToTop from "./components/ScrollToTop";
+import CursorBlur from "./components/CursorBlur"; // Pastikan sudah diimport
 
-// Komponen Pembungkus Halaman Utama
 const HomePage = () => (
   <>
     <Hero />
@@ -23,25 +23,32 @@ const HomePage = () => (
 
 function App() {
   return (
-    // Menggunakan HashRouter agar routing ditangani oleh React, bukan server GitHub
     <Router>
       <ScrollToTop />
+      {/* 1. Kontainer Paling Luar */}
       <div className="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
-        <Navbar />
         
-        <main className="w-full"> 
-          <Routes>
-            {/* Halaman Utama */}
-            <Route path="/" element={<HomePage />} />
-            
-            {/* Halaman Internal */}
-            <Route path="/DesignPhotography" element={<DesignPhotography />} />
-            <Route path="/VideoEditing" element={<VideoEditing />} />
+        {/* 2. Pindahkan Navbar, CursorBlur, dan Main ke dalam satu grup isolate yang sama */}
+        <div className="relative isolate">
+          
+          {/* Layer paling dasar */}
+          <CursorBlur />
 
-            {/* PENTING: Rute pengaman jika path tidak ditemukan */}
-            <Route path="*" element={<HomePage />} />
-          </Routes>
-        </main>
+          {/* Navbar sekarang sejajar dengan main, berada di depan blur */}
+          <div className="relative z-10">
+            <Navbar />
+            
+            <main className="w-full"> 
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/DesignPhotography" element={<DesignPhotography />} />
+                <Route path="/VideoEditing" element={<VideoEditing />} />
+                <Route path="*" element={<HomePage />} />
+              </Routes>
+            </main>
+          </div>
+          
+        </div>
 
         <Footer />
       </div>

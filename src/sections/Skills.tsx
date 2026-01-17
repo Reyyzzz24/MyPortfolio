@@ -24,7 +24,7 @@ const Skills = () => {
   const skillListRight = ["Python", "Machine Learning", "SQL", "Video Editing"];
 
   return (
-    <section id="skills" className="bg-gray-50 dark:bg-gray-800/30 py-24 transition-colors duration-300">
+    <section id="skills" className="bg-gray-50/80 dark:bg-gray-800/30 py-24 transition-colors duration-300">
       <div className="container mx-auto max-w-7xl px-6 md:px-12">
         {/* Header */}
         <div className="text-center mb-16">

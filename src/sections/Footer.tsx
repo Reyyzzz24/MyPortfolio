@@ -29,7 +29,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="py-12 border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 text-center transition-colors duration-300">
+    <footer className="py-12 border-t border-gray-100 dark:border-gray-800 bg-gray-50/80 dark:bg-gray-900 text-center transition-colors duration-300">
       <div className="container mx-auto px-6">
         {/* Social Links Row */}
         <div className="flex justify-center items-center space-x-6 mb-8">

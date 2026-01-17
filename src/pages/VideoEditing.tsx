@@ -86,7 +86,7 @@ const VideoCard = ({ item, isSmall = false }: { item: any; isSmall?: boolean }) 
 
 const VideoEditing = () => {
   return (
-    <div className="pt-32 pb-24 bg-white dark:bg-gray-900 min-h-screen">
+    <div className="pt-32 pb-24 bg-transparent dark:bg-gray-900/50 min-h-screen">
       <div className="container mx-auto px-6 max-w-7xl">
         
         <div className="text-center mb-20">

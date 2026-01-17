@@ -1,24 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useDarkMode } from "../hooks/useDarkMode";
 
 const Navbar = () => {
+    const [theme, setTheme] = useDarkMode();
+    const isDark = theme === 'dark';
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    // State ini sekarang digunakan di bagian mobile bawah
     const [isResumeOpenMobile, setIsResumeOpenMobile] = useState(false);
 
-    // Logika Dark Mode
-    useEffect(() => {
-        if (isDarkMode) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    }, [isDarkMode]);
-
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-    const toggleTheme = () => setIsDarkMode(!isDarkMode);
+
+    const toggleTheme = () => {
+        setTheme(isDark ? "light" : "dark");
+    };
 
     return (
-        <header className="top-0 z-50 bg-white/80 dark:bg-gray-900">
+        <header className="top-0 z-50 bg-white dark:bg-gray-900">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 {/* Logo */}
                 <div className="text-3xl font-bold tracking-tighter">
@@ -40,11 +38,11 @@ const Navbar = () => {
                                 className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition overflow-hidden w-10 h-10 flex items-center justify-center"
                             >
                                 {/* Sun Icon */}
-                                <svg xmlns="http://www.w3.org/2000/svg" className={`w-5 h-5 transition-all duration-500 transform ${isDarkMode ? 'rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" className={`w-5 h-5 transition-all duration-500 transform ${isDark ? 'rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
                                 </svg>
                                 {/* Moon Icon */}
-                                <svg xmlns="http://www.w3.org/2000/svg" className={`absolute w-5 h-5 transition-all duration-500 transform ${isDarkMode ? 'rotate-0 scale-100 opacity-100' : '-rotate-90 scale-0 opacity-0'} text-yellow-400`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" className={`absolute w-5 h-5 transition-all duration-500 transform ${isDark ? 'rotate-0 scale-100 opacity-100' : '-rotate-90 scale-0 opacity-0'} text-yellow-400`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                                 </svg>
                             </button>
@@ -124,13 +122,13 @@ const Navbar = () => {
                         className="flex items-center space-x-3 p-4 w-full rounded-xl bg-gray-100 dark:bg-gray-800 transition-colors"
                     >
                         <div className="relative w-6 h-6 flex-shrink-0">
-                            {isDarkMode ? (
+                            {isDark ? (
                                 <svg className="text-yellow-400 w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
                             ) : (
                                 <svg className="text-gray-700 w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
                             )}
                         </div>
-                        <span className="text-sm font-medium dark:text-gray-200">Switch to {isDarkMode ? 'Light' : 'Dark'} Mode</span>
+                        <span className="text-sm font-medium dark:text-gray-200">Switch to {isDark ? 'Light' : 'Dark'} Mode</span>
                     </button>
                 </div>
             </div>
