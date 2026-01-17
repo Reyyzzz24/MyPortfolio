@@ -82,7 +82,7 @@ const Hero = () => {
                         />
 
                         <motion.img
-                            src="./images/image.jpeg"
+                            src="images/image.jpeg"
                             alt="Reva Yulian"
                             animate={{ y: [0, -20, 0] }}
                             transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
