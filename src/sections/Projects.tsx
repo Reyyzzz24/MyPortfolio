@@ -19,7 +19,7 @@ const Portfolio = () => {
       image: "./images/portofolios/figure6.jpg",
       tags: ["Premiere Pro", "Motion Graphics", "VFX"],
       description: "Cinematic films and animations, showcasing my skills in editing, animation, and visual storytelling.",
-      link: "/VideoEditing"
+      link: "#/VideoEditing"
     },
     {
       title: "Game Project",
@@ -33,7 +33,7 @@ const Portfolio = () => {
       image: "./images/portofolios/figure8.jpg",
       tags: ["Graphic Design", "Photography", "Photoshop"],
       description: "Exploring visual composition, branding, and creative storytelling through graphics and photography.",
-      link: "/DesignPhotography" // Ganti dari design&photography.html ke /portfolio
+      link: "#/DesignPhotography" // Ganti dari design&photography.html ke /portfolio
     }
   ];
 

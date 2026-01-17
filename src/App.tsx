@@ -1,4 +1,4 @@
-// Ganti BrowserRouter menjadi HashRouter
+// GANTI BrowserRouter menjadi HashRouter
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./sections/Navbar";
 import Hero from "./sections/Hero";
@@ -10,6 +10,7 @@ import Footer from "./sections/Footer";
 import DesignPhotography from "./pages/DesignPhotography"; 
 import VideoEditing from "./pages/VideoEditing"; 
 
+// Komponen Pembungkus Halaman Utama
 const HomePage = () => (
   <>
     <Hero />
@@ -22,22 +23,21 @@ const HomePage = () => (
 
 function App() {
   return (
-    // HashRouter adalah solusi terbaik untuk GitHub Pages agar tidak 404/blank
+    // Menggunakan HashRouter agar routing ditangani oleh React, bukan server GitHub
     <Router>
       <div className="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
         <Navbar />
         
         <main className="w-full"> 
           <Routes>
-            {/* Rute Utama */}
+            {/* Halaman Utama */}
             <Route path="/" element={<HomePage />} />
             
-            {/* Rute Halaman Tambahan */}
+            {/* Halaman Internal */}
             <Route path="/DesignPhotography" element={<DesignPhotography />} />
             <Route path="/VideoEditing" element={<VideoEditing />} />
 
-            {/* SOLUSI KRUSIAL: Jika user mengakses /MyPortfolio/ tanpa hash, 
-                atau rute tidak dikenal, paksa tampilkan HomePage */}
+            {/* PENTING: Rute pengaman jika path tidak ditemukan */}
             <Route path="*" element={<HomePage />} />
           </Routes>
         </main>
