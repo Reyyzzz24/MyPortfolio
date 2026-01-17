@@ -8,6 +8,8 @@ import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
 import DesignPhotography from "./pages/DesignPhotography";
 import VideoEditing from "./pages/VideoEditing";
+import WebProjects from "./pages/WebProjects";
+import GameProjects from "./pages/GameProjects";
 import ScrollToTop from "./components/ScrollToTop";
 
 const HomePage = () => (
@@ -35,6 +37,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/DesignPhotography" element={<DesignPhotography />} />
               <Route path="/VideoEditing" element={<VideoEditing />} />
+              <Route path="/WebProjects" element={<WebProjects />} />
+              <Route path="/GameProjects" element={<GameProjects />} />
               <Route path="*" element={<HomePage />} />
             </Routes>
           </main>

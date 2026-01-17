@@ -15,7 +15,7 @@ const Portfolio = () => {
       image: "images/portofolios/figure2.jpg",
       tags: ["Web Dev", "UI/UX", "Mobile App"],
       description: "Developed and deployed dynamic applications focusing on performance, security, and user-friendly design.",
-      link: "/",
+      link: "/WebProjects", // Hapus tanda #
       isExternal: false
     },
     {
@@ -27,12 +27,12 @@ const Portfolio = () => {
       isExternal: false
     },
     {
-      title: "Game Project",
+      title: "Game Projects",
       image: "images/portofolios/figure7.webp",
       tags: ["Game Dev", "Unity", "GML"],
       description: "Pixel game projects using GameMaker, focusing on 2D mechanics, AI, and interactive gameplay.",
-      link: "https://github.com/Reyyzzz24/Game-Project",
-      isExternal: true
+      link: "/GameProjects", // Hapus tanda #
+      isExternal: false
     },
     {
       title: "Design & Photography",
