@@ -2,35 +2,35 @@ const Portfolio = () => {
   const projects = [
     {
       title: "Machine Learning",
-      image: "./images/portofolios/figure4.jpg",
+      image: "images/portofolios/figure4.jpg",
       tags: ["Machine Learning", "Data Science", "TensorFlow"],
       description: "These are some machine learning projects I worked on at university, applying various techniques to real-world problems.",
       link: "https://github.com/Reyyzzz24/Machine-Learning"
     },
     {
       title: "Web & Mobile App",
-      image: "./images/portofolios/figure2.jpg",
+      image: "images/portofolios/figure2.jpg",
       tags: ["Web Dev", "UI/UX", "Mobile App"],
       description: "Developed and deployed dynamic applications focusing on performance, security, and user-friendly design.",
       link: "/"
     },
     {
       title: "Video Editing",
-      image: "./images/portofolios/figure6.jpg",
+      image: "images/portofolios/figure6.jpg",
       tags: ["Premiere Pro", "Motion Graphics", "VFX"],
       description: "Cinematic films and animations, showcasing my skills in editing, animation, and visual storytelling.",
       link: "#/VideoEditing"
     },
     {
       title: "Game Project",
-      image: "./images/portofolios/figure7.webp",
+      image: "images/portofolios/figure7.webp",
       tags: ["Game Dev", "Unity", "GML"],
       description: "Pixel game projects using GameMaker, focusing on 2D mechanics, AI, and interactive gameplay.",
       link: "https://github.com/Reyyzzz24/Game-Project"
     },
     {
       title: "Design & Photography",
-      image: "./images/portofolios/figure8.jpg",
+      image: "images/portofolios/figure8.jpg",
       tags: ["Graphic Design", "Photography", "Photoshop"],
       description: "Exploring visual composition, branding, and creative storytelling through graphics and photography.",
       link: "#/DesignPhotography" // Ganti dari design&photography.html ke /portfolio
