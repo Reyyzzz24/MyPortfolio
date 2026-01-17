@@ -1,7 +1,6 @@
 import { motion, type Variants } from 'framer-motion';
 
 const Hero = () => {
-    // Menambahkan tipe : Variants agar TypeScript mengenali propertinya
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
@@ -28,7 +27,7 @@ const Hero = () => {
                 {/* Konten Teks */}
                 <motion.div
                     className="md:w-1/2 text-center md:text-left"
-                    variants={containerVariants} // Dipastikan menggunakan motion.div
+                    variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
@@ -72,22 +71,24 @@ const Hero = () => {
                     viewport={{ once: true }}
                 >
                     <div className="relative">
+                        {/* Efek Cahaya Belakang - Optimasi: transform-gpu & will-change */}
                         <motion.div
                             animate={{
                                 scale: [1, 1.2, 1],
                                 opacity: [0.3, 0.5, 0.3]
                             }}
                             transition={{ repeat: Infinity, duration: 4 }}
-                            className="absolute -inset-4 bg-blue-600/20 dark:bg-blue-500/30 rounded-full blur-2xl"
+                            className="absolute -inset-4 bg-blue-600/20 dark:bg-blue-500/30 rounded-full blur-2xl transform-gpu will-change-transform"
                         />
 
+                        {/* Gambar Utama - Optimasi: transform-gpu & will-change */}
                         <motion.img
                             src="images/image.jpeg"
                             alt="Reva Yulian"
                             animate={{ y: [0, -20, 0] }}
                             transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
                             whileHover={{ scale: 1.05, rotate: 2 }}
-                            className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[28rem] lg:h-[28rem] rounded-full object-cover border-8 border-white dark:border-gray-800 shadow-2xl transition-all duration-300"
+                            className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[28rem] lg:h-[28rem] rounded-full object-cover border-8 border-white dark:border-gray-800 shadow-2xl transition-all duration-300 transform-gpu will-change-transform"
                         />
                     </div>
                 </motion.div>
