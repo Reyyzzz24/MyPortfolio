@@ -1,4 +1,3 @@
-// GANTI BrowserRouter menjadi HashRouter
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./sections/Navbar";
 import Hero from "./sections/Hero";
@@ -9,6 +8,7 @@ import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
 import DesignPhotography from "./pages/DesignPhotography"; 
 import VideoEditing from "./pages/VideoEditing"; 
+import ScrollToTop from "./components/ScrollToTop";
 
 // Komponen Pembungkus Halaman Utama
 const HomePage = () => (
@@ -25,6 +25,7 @@ function App() {
   return (
     // Menggunakan HashRouter agar routing ditangani oleh React, bukan server GitHub
     <Router>
+      <ScrollToTop />
       <div className="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
         <Navbar />
         

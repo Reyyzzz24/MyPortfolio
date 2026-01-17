@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Portfolio = () => {
   const projects = [
     {
@@ -5,35 +7,40 @@ const Portfolio = () => {
       image: "images/portofolios/figure4.jpg",
       tags: ["Machine Learning", "Data Science", "TensorFlow"],
       description: "These are some machine learning projects I worked on at university, applying various techniques to real-world problems.",
-      link: "https://github.com/Reyyzzz24/Machine-Learning"
+      link: "https://github.com/Reyyzzz24/Machine-Learning",
+      isExternal: true // Tandai sebagai link luar
     },
     {
       title: "Web & Mobile App",
       image: "images/portofolios/figure2.jpg",
       tags: ["Web Dev", "UI/UX", "Mobile App"],
       description: "Developed and deployed dynamic applications focusing on performance, security, and user-friendly design.",
-      link: "/"
+      link: "/",
+      isExternal: false
     },
     {
       title: "Video Editing",
       image: "images/portofolios/figure6.jpg",
       tags: ["Premiere Pro", "Motion Graphics", "VFX"],
       description: "Cinematic films and animations, showcasing my skills in editing, animation, and visual storytelling.",
-      link: "#/VideoEditing"
+      link: "/VideoEditing", // Hapus tanda #
+      isExternal: false
     },
     {
       title: "Game Project",
       image: "images/portofolios/figure7.webp",
       tags: ["Game Dev", "Unity", "GML"],
       description: "Pixel game projects using GameMaker, focusing on 2D mechanics, AI, and interactive gameplay.",
-      link: "https://github.com/Reyyzzz24/Game-Project"
+      link: "https://github.com/Reyyzzz24/Game-Project",
+      isExternal: true
     },
     {
       title: "Design & Photography",
       image: "images/portofolios/figure8.jpg",
       tags: ["Graphic Design", "Photography", "Photoshop"],
       description: "Exploring visual composition, branding, and creative storytelling through graphics and photography.",
-      link: "#/DesignPhotography" // Ganti dari design&photography.html ke /portfolio
+      link: "/DesignPhotography", // Hapus tanda #
+      isExternal: false
     }
   ];
 
@@ -72,14 +79,29 @@ const Portfolio = () => {
                   <h4 className="text-xl font-bold text-gray-900 dark:text-white">
                     {project.title}
                   </h4>
-                  <a
-                    href={project.link}
-                    className="p-2 bg-blue-50 dark:bg-gray-700 rounded-full text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white transition-all shadow-sm"
-                  >
-                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                      <path d="M6 17c2.269-9.881 11-11.667 11-11.667v-3.333l7 6.637-7 6.696v-3.333s-6.17-.171-11 5zm12 .145v2.855h-16v-12h6.598c.768-.787 1.561-1.449 2.339-2h-10.937v16h20v-6.769l-2 1.914z" />
-                    </svg>
-                  </a>
+                  
+                  {/* Logika Link: External pakai <a>, Internal pakai <Link> */}
+                  {project.isExternal ? (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-blue-50 dark:bg-gray-700 rounded-full text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white transition-all shadow-sm"
+                    >
+                      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M6 17c2.269-9.881 11-11.667 11-11.667v-3.333l7 6.637-7 6.696v-3.333s-6.17-.171-11 5zm12 .145v2.855h-16v-12h6.598c.768-.787 1.561-1.449 2.339-2h-10.937v16h20v-6.769l-2 1.914z" />
+                      </svg>
+                    </a>
+                  ) : (
+                    <Link
+                      to={project.link}
+                      className="p-2 bg-blue-50 dark:bg-gray-700 rounded-full text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white transition-all shadow-sm"
+                    >
+                      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M6 17c2.269-9.881 11-11.667 11-11.667v-3.333l7 6.637-7 6.696v-3.333s-6.17-.171-11 5zm12 .145v2.855h-16v-12h6.598c.768-.787 1.561-1.449 2.339-2h-10.937v16h20v-6.769l-2 1.914z" />
+                      </svg>
+                    </Link>
+                  )}
                 </div>
 
                 {/* Tags */}
