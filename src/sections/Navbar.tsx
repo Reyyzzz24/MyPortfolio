@@ -22,7 +22,7 @@ const Navbar = () => {
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 {/* Logo */}
                 <div className="text-3xl font-bold tracking-tighter">
-                    <a href="/" className="text-blue-600 dark:text-blue-400">RY</a>
+                    <a href="#/" className="text-blue-600 dark:text-blue-400">RY</a>
                 </div>
 
                 {/* Desktop Navigation */}
