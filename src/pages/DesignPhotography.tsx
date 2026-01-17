@@ -1,7 +1,10 @@
-import { motion, type Variants } from 'framer-motion';
+import { useState } from 'react'; // Tambahkan useState
+import { motion, type Variants, AnimatePresence } from 'framer-motion';
 
 const DesignPhotography = () => {
-  // Animasi masuk untuk setiap item grid (staggered)
+  // State untuk menyimpan URL gambar yang di-zoom
+  const [selectedImg, setSelectedImg] = useState<string | null>(null);
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -42,9 +45,42 @@ const DesignPhotography = () => {
   ];
 
   return (
-    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300 antialiased">
-      {/* Design Section */}
-      <section id="services" className="pt-32 pb-24 bg-white dark:bg-gray-900">
+    <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300 antialiased relative">
+      
+      {/* --- LIGHTBOX MODAL --- */}
+      <AnimatePresence>
+        {selectedImg && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImg(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 cursor-zoom-out"
+          >
+            {/* Tombol Close (X) */}
+            <button 
+              className="absolute top-6 right-6 text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all"
+              onClick={() => setSelectedImg(null)}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <motion.img
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              src={selectedImg}
+              className="max-w-full max-h-[90vh] rounded-lg shadow-2xl object-contain"
+              onClick={(e) => e.stopPropagation()} // Supaya klik gambar tidak nutup modal
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* --- DESIGN SECTION --- */}
+      <section id="design-layout" className="pt-32 pb-24 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-6 md:px-12 max-w-7xl">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -68,10 +104,11 @@ const DesignPhotography = () => {
               <motion.div
                 key={idx}
                 variants={itemVariants}
-                className="group bg-gray-50 dark:bg-gray-800/40 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
+                className="group bg-gray-50 dark:bg-gray-800/40 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 cursor-pointer"
+                onClick={() => setSelectedImg(item.src)} // TRIGGER ZOOM
               >
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={item.src} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 cursor-zoom-in" />
+                  <img src={item.src} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 </div>
                 <div className="p-8 text-center">
                   <span className={`inline-block px-3 py-1 text-[10px] font-bold tracking-widest uppercase bg-${item.color}-100 dark:bg-${item.color}-900/30 text-${item.color}-600 rounded-full mb-4`}>
@@ -86,7 +123,7 @@ const DesignPhotography = () => {
         </div>
       </section>
 
-      {/* Photography Section */}
+      {/* --- PHOTOGRAPHY SECTION --- */}
       <section id="photography" className="py-24 bg-gray-50 dark:bg-gray-800/20">
         <div className="container mx-auto px-6 md:px-12 max-w-7xl">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
@@ -106,16 +143,24 @@ const DesignPhotography = () => {
             viewport={{ once: true }}
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
           >
-            {photos.map((id, idx) => (
-              <motion.div 
-                key={idx}
-                variants={itemVariants}
-                className="aspect-square overflow-hidden rounded-2xl shadow-sm group relative bg-gray-200"
-              >
-                <img src={`https://ar-hosting.pages.dev/${id}.jpg`} alt={`Photography ${idx + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700 cursor-zoom-in" />
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-              </motion.div>
-            ))}
+            {photos.map((id, idx) => {
+              const imgSrc = `https://ar-hosting.pages.dev/${id}.jpg`;
+              return (
+                <motion.div 
+                  key={idx}
+                  variants={itemVariants}
+                  className="aspect-square overflow-hidden rounded-2xl shadow-sm group relative bg-gray-200 cursor-pointer"
+                  onClick={() => setSelectedImg(imgSrc)} // TRIGGER ZOOM
+                >
+                  <img src={imgSrc} alt={`Photography ${idx + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                     <svg className="w-8 h-8 text-white opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                     </svg>
+                  </div>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
