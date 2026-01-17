@@ -1,29 +1,60 @@
-import { motion, useSpring, useMotionValue } from "framer-motion";
-import { useEffect } from "react";
+import { motion, useSpring, useMotionValue, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const CursorBlur = () => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // SUPER SMOOTH + CINEMATIC DELAY
+  const prefersReducedMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile / touch device
+  useEffect(() => {
+    const check = () => {
+      setIsMobile(
+        window.innerWidth < 768 ||
+        "ontouchstart" in window
+      );
+    };
+
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // 🚀 LIGHTER SPRING (still smooth)
   const springConfig = {
-    damping: 50,     // makin besar = makin halus
-    stiffness: 70,   // makin kecil = makin delay
-    mass: 2.5,       // makin berat = liquid feel
+    damping: 35,
+    stiffness: 90,
+    mass: 1.6,
   };
 
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
+  // Desktop only mouse tracking
   useEffect(() => {
+    if (isMobile) return;
+
+    let rafId: number;
+
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX - 400);
-      mouseY.set(e.clientY - 400);
+      cancelAnimationFrame(rafId);
+
+      rafId = requestAnimationFrame(() => {
+        mouseX.set(e.clientX - 300);
+        mouseY.set(e.clientY - 300);
+      });
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, isMobile]);
+
+  // ❌ Disable heavy effect on mobile
+  if (isMobile || prefersReducedMotion) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
@@ -31,32 +62,27 @@ const CursorBlur = () => {
         style={{
           x: smoothX,
           y: smoothY,
-          filter: "saturate(0.85)", // bikin warna lebih soft
+          filter: "saturate(0.85)",
         }}
-        className="relative w-[800px] h-[800px] transform-gpu will-change-transform"
+        className="relative w-[600px] h-[600px] transform-gpu will-change-transform"
       >
-        {/* LIQUID BLOB */}
+        {/* OPTIMIZED LIQUID */}
         <motion.div
           animate={{
-            scale: [1, 1.08, 1],
+            scale: [1, 1.05, 1],
             backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-            borderRadius: [
-              "45% 55% 65% 35% / 45% 50% 60% 55%",
-              "60% 40% 35% 65% / 55% 40% 65% 45%",
-              "45% 55% 65% 35% / 45% 50% 60% 55%",
-            ],
           }}
           transition={{
-            duration: 20, // lebih lambat = cinematic
+            duration: 24,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: "linear",
           }}
           className="
             absolute inset-0
-            blur-[160px]
-            opacity-60
-            bg-[radial-gradient(circle_at_30%_30%,rgba(251,146,60,0.22),transparent_45%),radial-gradient(circle_at_70%_40%,rgba(236,72,153,0.23),transparent_50%),radial-gradient(circle_at_50%_70%,rgba(168,85,247,0.20),transparent_55%)]
-            bg-[length:200%_200%]
+            blur-[110px]
+            opacity-45
+            bg-[radial-gradient(circle_at_30%_30%,rgba(99,102,241,0.22),transparent_50%),radial-gradient(circle_at_70%_40%,rgba(168,85,247,0.20),transparent_55%),radial-gradient(circle_at_50%_70%,rgba(34,211,238,0.18),transparent_60%)]
+            bg-[length:180%_180%]
           "
         />
       </motion.div>
