@@ -45,7 +45,7 @@ const VideoCard = ({ item, isSmall = false }: { item: any; isSmall?: boolean }) 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className={`group bg-gray-50 dark:bg-gray-800/40 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-500 hover:shadow-2xl ${!isSmall && 'hover:-translate-y-2'}`}
+      className={`group bg-white dark:bg-gray-900 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-500 hover:shadow-2xl ${!isSmall && 'hover:-translate-y-2'}`}
     >
       <div className="relative aspect-video bg-black overflow-hidden">
         {!isPlaying ? (
@@ -69,7 +69,6 @@ const VideoCard = ({ item, isSmall = false }: { item: any; isSmall?: boolean }) 
             className="absolute inset-0 w-full h-full" 
             allow="autoplay; fullscreen; encrypted-media"
             allowFullScreen
-            // Sandbox membantu browser melonggarkan proteksi jika link aman
             sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-top-navigation"
           ></iframe>
         )}
@@ -86,33 +85,40 @@ const VideoCard = ({ item, isSmall = false }: { item: any; isSmall?: boolean }) 
 
 const VideoEditing = () => {
   return (
-    <div className="pt-32 pb-24 bg-transparent dark:bg-gray-900/50 min-h-screen">
-      <div className="container mx-auto px-6 max-w-7xl">
-        
-        <div className="text-center mb-20">
-          <h3 className="text-blue-600 font-semibold uppercase tracking-[0.4em] text-xs mb-3">Portfolio</h3>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">Video Editing</h1>
-          <div className="h-1.5 w-20 bg-blue-600 mx-auto mt-6 rounded-full"></div>
-        </div>
+    <div className="min-h-screen">
+      {/* Section Video Editing - Background White / Dark Gray 900 */}
+      <section className="pt-32 pb-24 bg-white dark:bg-gray-900">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="text-center mb-20">
+            <h3 className="text-blue-600 font-semibold uppercase tracking-[0.4em] text-xs mb-3">Portfolio</h3>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">Video Editing</h1>
+            <div className="h-1.5 w-20 bg-blue-600 mx-auto mt-6 rounded-full"></div>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-32">
-          {videoData.map((video) => (
-            <VideoCard key={video.id} item={video} />
-          ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {videoData.map((video) => (
+              <VideoCard key={video.id} item={video} />
+            ))}
+          </div>
         </div>
+      </section>
 
-        <div className="text-center mb-16">
-          <h3 className="text-blue-600 font-semibold uppercase tracking-[0.3em] text-sm">AND</h3>
-          <h1 className="text-4xl md:text-5xl font-bold mt-2 text-gray-900 dark:text-white">More AMVs</h1>
-          <div className="h-1.5 w-20 bg-blue-600 mx-auto mt-6 rounded-full"></div>
-        </div>
+      {/* Section More AMVs - Background Gray 50 / Dark Gray 800/50 */}
+      <section className="py-24 bg-gray-50 dark:bg-gray-800/50">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="text-center mb-16">
+            <h3 className="text-blue-600 font-semibold uppercase tracking-[0.3em] text-sm">AND</h3>
+            <h1 className="text-4xl md:text-5xl font-bold mt-2 text-gray-900 dark:text-white">More AMVs</h1>
+            <div className="h-1.5 w-20 bg-blue-600 mx-auto mt-6 rounded-full"></div>
+          </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {amvData.map((amv) => (
-            <VideoCard key={amv.id} item={amv} isSmall={true} />
-          ))}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {amvData.map((amv) => (
+              <VideoCard key={amv.id} item={amv} isSmall={true} />
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
