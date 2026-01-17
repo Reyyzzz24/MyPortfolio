@@ -38,6 +38,7 @@ const amvData = [
 
 const VideoCard = ({ item, isSmall = false }: { item: any; isSmall?: boolean }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const finalUrl = item.videoUrl || item.url;
 
   return (
     <motion.div 
@@ -51,7 +52,7 @@ const VideoCard = ({ item, isSmall = false }: { item: any; isSmall?: boolean }) 
           <div className="cursor-pointer h-full w-full" onClick={() => setIsPlaying(true)}>
             <img 
               src={item.thumbnail || item.thumb} 
-              alt={item.title} 
+              alt={item.title || "Video Thumbnail"} 
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
             />
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-all flex items-center justify-center">
@@ -64,9 +65,12 @@ const VideoCard = ({ item, isSmall = false }: { item: any; isSmall?: boolean }) 
           </div>
         ) : (
           <iframe 
-            src={`${item.videoUrl || item.url}&autoplay=1`} 
+            src={finalUrl} 
             className="absolute inset-0 w-full h-full" 
-            allow="autoplay; fullscreen"
+            allow="autoplay; fullscreen; encrypted-media"
+            allowFullScreen
+            // Sandbox membantu browser melonggarkan proteksi jika link aman
+            sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-top-navigation"
           ></iframe>
         )}
       </div>
@@ -85,21 +89,18 @@ const VideoEditing = () => {
     <div className="pt-32 pb-24 bg-white dark:bg-gray-900 min-h-screen">
       <div className="container mx-auto px-6 max-w-7xl">
         
-        {/* Tombol Back */}
         <div className="text-center mb-20">
           <h3 className="text-blue-600 font-semibold uppercase tracking-[0.4em] text-xs mb-3">Portfolio</h3>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">Video Editing</h1>
           <div className="h-1.5 w-20 bg-blue-600 mx-auto mt-6 rounded-full"></div>
         </div>
 
-        {/* Main Videos */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-32">
           {videoData.map((video) => (
             <VideoCard key={video.id} item={video} />
           ))}
         </div>
 
-        {/* More AMVs Section */}
         <div className="text-center mb-16">
           <h3 className="text-blue-600 font-semibold uppercase tracking-[0.3em] text-sm">AND</h3>
           <h1 className="text-4xl md:text-5xl font-bold mt-2 text-gray-900 dark:text-white">More AMVs</h1>

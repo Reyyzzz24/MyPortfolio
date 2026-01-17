@@ -73,7 +73,7 @@ const Navbar = () => {
                 {/* Burger Button Mobile */}
                 <button
                     onClick={toggleMenu}
-                    className="fixed top-4 right-4 md:hidden flex flex-col space-y-1.5 cursor-pointer z-[70] p-3 backdrop-blur-md rounded-lg"
+                    className="fixed top-4 right-4 md:hidden flex flex-col space-y-1.5 cursor-pointer z-[70] p-3"
                 >
                     <div className={`w-6 h-0.5 bg-gray-800 dark:bg-gray-100 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></div>
                     <div className={`w-6 h-0.5 bg-gray-800 dark:bg-gray-100 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></div>
