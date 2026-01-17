@@ -7,8 +7,7 @@ import Skills from "./sections/Skills";
 import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
 import DesignPhotography from "./pages/DesignPhotography"; // Pastikan path file benar
-import VideoEditing from "./pages/VideoEditing"; // Pastikan path file benar
-
+import VideoEditing from "./pages/VideoEditing"; // Pastikan path file benar  
 
 // Kita bungkus konten utama ke dalam satu komponen agar rapi
 const HomePage = () => (
