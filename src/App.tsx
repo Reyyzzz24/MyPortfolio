@@ -11,6 +11,7 @@ import VideoEditing from "./pages/VideoEditing";
 import WebProjects from "./pages/WebProjects";
 import GameProjects from "./pages/GameProjects";
 import ScrollToTop from "./components/ScrollToTop";
+import ChatBot from "./sections/ChatBot";
 
 const HomePage = () => (
   <>
@@ -42,6 +43,7 @@ function App() {
               <Route path="*" element={<HomePage />} />
             </Routes>
           </main>
+          <ChatBot />
         </div>
         <Footer />
       </div>
