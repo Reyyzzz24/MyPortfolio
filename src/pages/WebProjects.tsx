@@ -5,7 +5,8 @@ const projects = [
     tech: ["React", "Tailwind", "Firebase"],
     link: "#",
     github: "#",
-    image: "https://via.placeholder.com/600x400" // Ganti dengan screenshot proyekmu
+    // Gambar bertema shopping online/coding dashboard
+    image: "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=800&auto=format&fit=crop"
   },
   {
     title: "Portfolio Website",
@@ -13,7 +14,8 @@ const projects = [
     tech: ["Next.js", "TypeScript", "Tailwind"],
     link: "#",
     github: "#",
-    image: "https://via.placeholder.com/600x400"
+    // Gambar bertema minimal modern web design
+    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop"
   },
   {
     title: "Task Management Tool",
@@ -21,7 +23,8 @@ const projects = [
     tech: ["React", "Redux", "Node.js"],
     link: "#",
     github: "#",
-    image: "https://via.placeholder.com/600x400"
+    // Gambar bertema productivity/kanban board
+    image: "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?q=80&w=800&auto=format&fit=crop"
   }
 ];
 

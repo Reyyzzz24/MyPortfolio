@@ -4,7 +4,8 @@ const gameProjects = [
     genre: "Endless Runner",
     description: "Game arcade bertema futuristik yang dibuat dengan Unity. Memenangkan peringkat ke-3 dalam Global Game Jam 2025.",
     platform: "PC / Web",
-    image: "https://via.placeholder.com/800x450", // Gunakan rasio 16:9
+    // Menggunakan Unsplash dengan kata kunci 'cyberpunk game' agar visual lebih menarik
+    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop", 
     playLink: "#",
     tech: ["C#", "Unity", "Blender"]
   },
@@ -13,7 +14,8 @@ const gameProjects = [
     genre: "Tower Defense",
     description: "Game strategi di mana pemain harus mempertahankan benteng dari serangan orc menggunakan berbagai menara sihir.",
     platform: "Android / iOS",
-    image: "https://via.placeholder.com/800x450",
+    // Menggunakan Unsplash dengan kata kunci 'fantasy castle game'
+    image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop",
     playLink: "#",
     tech: ["Godot", "GDScript", "Aseprite"]
   }

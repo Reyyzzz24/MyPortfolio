@@ -56,10 +56,10 @@ const Navbar = () => {
                             {/* Perubahan: Tambahkan pembungkus transparan agar kursor tidak 'terputus' */}
                             <div className="absolute right-0 top-full w-48 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                                 <div className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg shadow-xl overflow-hidden">
-                                    <a href="/MyPortfolio/resume-id.pdf" target="_blank" rel="noreferrer" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200">
+                                    <a href="resume-id.pdf" target="_blank" rel="noreferrer" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200">
                                         Resume Indonesia
                                     </a>
-                                    <a href="/MyPortfolio/resume-en.pdf" target="_blank" rel="noreferrer" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200">
+                                    <a href="resume-en.pdf" target="_blank" rel="noreferrer" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200">
                                         Resume English
                                     </a>
                                 </div>
@@ -108,8 +108,8 @@ const Navbar = () => {
                         </button>
 
                         <div className={`flex flex-col mt-2 transition-all duration-500 ease-in-out bg-gray-50 dark:bg-gray-800 rounded-xl overflow-hidden ${isResumeOpenMobile ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                            <a href="/MyPortfolio/resume-id.pdf" target="_blank" rel="noreferrer" className="block px-4 py-4 text-base hover:bg-blue-50 dark:hover:bg-blue-900/20 dark:text-gray-200 border-b dark:border-gray-700">Resume Indonesia</a>
-                            <a href="/MyPortfolio/resume-en.pdf" target="_blank" rel="noreferrer" className="block px-4 py-4 text-base hover:bg-blue-50 dark:hover:bg-blue-900/20 dark:text-gray-200">Resume English</a>
+                            <a href="resume-id.pdf" target="_blank" rel="noreferrer" className="block px-4 py-4 text-base hover:bg-blue-50 dark:hover:bg-blue-900/20 dark:text-gray-200 border-b dark:border-gray-700">Resume Indonesia</a>
+                            <a href="resume-en.pdf" target="_blank" rel="noreferrer" className="block px-4 py-4 text-base hover:bg-blue-50 dark:hover:bg-blue-900/20 dark:text-gray-200">Resume English</a>
                         </div>
                     </div>
                 </div>
