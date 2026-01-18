@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -7,18 +7,36 @@ interface Message {
     text: string;
 }
 
+// Optimasi 1: Gunakan memo agar pesan lama tidak dirender ulang saat mengetik
+const ChatBubble = memo(({ msg, isLast }: { msg: Message; isLast: boolean }) => (
+    <motion.div
+        // Optimasi 2: Gunakan layoutScroll dan batasi animasi hanya untuk pesan baru
+        layout="position"
+        initial={isLast ? { opacity: 0, x: msg.role === 'user' ? 10 : -10 } : false}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.2 }}
+        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+    >
+        <div className={`max-w-[85%] p-3.5 rounded-2xl text-sm leading-relaxed shadow-sm ${
+            msg.role === 'user'
+                ? 'bg-blue-600 text-white rounded-tr-none'
+                : 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-tl-none'
+        }`}>
+            {msg.text}
+        </div>
+    </motion.div>
+));
+
 const ChatBot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
     
-    // Inisialisasi messages dari LocalStorage
     const [messages, setMessages] = useState<Message[]>(() => {
         const saved = localStorage.getItem('reva_chat_history');
         if (saved) {
             try {
                 return JSON.parse(saved);
             } catch (e) {
-                console.error("Gagal memuat history chat:", e);
                 return [{ role: 'bot', text: 'Halo! Ada yang bisa saya bantu terkait portfolio Reva?' }];
             }
         }
@@ -27,33 +45,33 @@ const ChatBot = () => {
 
     const [input, setInput] = useState('');
     const scrollRef = useRef<HTMLDivElement>(null);
-
     const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_KEY;
 
-    // Effect untuk Auto Scroll dan Simpan ke LocalStorage
+    // Optimasi 3: Simpan ke storage tanpa effect berat
     useEffect(() => {
-        // Simpan ke local storage setiap kali ada perubahan pesan
         localStorage.setItem('reva_chat_history', JSON.stringify(messages));
-
+        
         if (scrollRef.current) {
+            // Optimasi 4: Gunakan behavior auto jika pesan sudah terlalu banyak (>15)
+            const isLongChat = messages.length > 15;
             scrollRef.current.scrollTo({
                 top: scrollRef.current.scrollHeight,
-                behavior: 'smooth'
+                behavior: isLongChat ? 'auto' : 'smooth'
             });
         }
-    }, [messages, isOpen, isTyping]);
+    }, [messages, isTyping]);
 
     const handleSend = async () => {
         if (!input.trim() || isTyping) return;
 
-        const userMessage: Message = { role: 'user', text: input };
-        setMessages((prev) => [...prev, userMessage]);
         const currentInput = input;
+        setMessages((prev) => [...prev, { role: 'user', text: currentInput }]);
         setInput('');
         setIsTyping(true);
 
         try {
             const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+            // Gunakan flash untuk respon lebih cepat
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
             const result = await model.generateContent(currentInput);
@@ -62,20 +80,17 @@ const ChatBot = () => {
 
             setMessages((prev) => [...prev, { role: 'bot', text: botText }]);
         } catch (error) {
-            console.error("ChatBot Error:", error);
             setMessages((prev) => [...prev, { 
                 role: 'bot', 
-                text: "Maaf, kuota harian saya sedang penuh. Silakan coba lagi nanti atau hubungi Reva via email." 
+                text: "Maaf, kuota harian saya sedang penuh. Silakan coba lagi nanti." 
             }]);
         } finally {
             setIsTyping(false);
         }
     };
 
-    // Fungsi tambahan untuk menghapus chat jika diinginkan
     const clearChat = () => {
-        const initialMsg: Message[] = [{ role: 'bot', text: 'Halo! Ada yang bisa saya bantu terkait portfolio Reva?' }];
-        setMessages(initialMsg);
+        setMessages([{ role: 'bot', text: 'Halo! Ada yang bisa saya bantu terkait portfolio Reva?' }]);
         localStorage.removeItem('reva_chat_history');
     };
 
@@ -87,10 +102,12 @@ const ChatBot = () => {
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                        // Optimasi 5: GPU Acceleration
+                        style={{ translateZ: 0 }}
                         className="mb-4 w-[calc(100vw-2rem)] md:w-96 h-[70vh] md:h-[500px] bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 flex flex-col overflow-hidden"
                     >
-                        {/* Header */}
-                        <div className="bg-blue-600 p-5 text-white flex justify-between items-center shadow-lg">
+                        {/* Header Tetap Sama */}
+                        <div className="bg-blue-600 p-5 text-white flex justify-between items-center shadow-lg shrink-0">
                             <div className="flex items-center gap-3">
                                 <div className="relative">
                                     <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center font-bold">R</div>
@@ -102,15 +119,12 @@ const ChatBot = () => {
                                 </div>
                             </div>
                             <div className="flex gap-2">
-                                <button onClick={clearChat} title="Hapus Chat" className="hover:bg-white/20 rounded-full p-2 transition-colors">
+                                <button onClick={clearChat} className="hover:bg-white/20 rounded-full p-2 transition-colors">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                 </button>
-                                <button 
-                                    onClick={() => setIsOpen(false)} 
-                                    className="hover:bg-white/20 rounded-full p-2 transition-colors active:scale-90"
-                                >
+                                <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 rounded-full p-2 transition-colors active:scale-90">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                     </svg>
@@ -121,20 +135,11 @@ const ChatBot = () => {
                         {/* Messages Area */}
                         <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-gray-900/50 scrollbar-thin">
                             {messages.map((msg, index) => (
-                                <motion.div 
-                                    initial={{ opacity: 0, x: msg.role === 'user' ? 10 : -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
+                                <ChatBubble 
                                     key={index} 
-                                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                                >
-                                    <div className={`max-w-[85%] p-3.5 rounded-2xl text-sm leading-relaxed shadow-sm ${
-                                        msg.role === 'user' 
-                                        ? 'bg-blue-600 text-white rounded-tr-none' 
-                                        : 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-tl-none'
-                                    }`}>
-                                        {msg.text}
-                                    </div>
-                                </motion.div>
+                                    msg={msg} 
+                                    isLast={index === messages.length - 1} 
+                                />
                             ))}
                             {isTyping && (
                                 <div className="flex justify-start">
@@ -149,8 +154,8 @@ const ChatBot = () => {
                             )}
                         </div>
 
-                        {/* Input Area */}
-                        <div className="p-4 bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+                        {/* Input Area Tetap Sama */}
+                        <div className="p-4 bg-white dark:bg-gray-800 border-t dark:border-gray-700 shrink-0">
                             <form 
                                 onSubmit={(e) => { e.preventDefault(); handleSend(); }}
                                 className="flex gap-2 bg-gray-100 dark:bg-gray-700 p-1.5 rounded-2xl items-center"
@@ -178,7 +183,7 @@ const ChatBot = () => {
                 )}
             </AnimatePresence>
 
-            {/* Floating Button */}
+            {/* Floating Button Tetap Sama */}
             <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
