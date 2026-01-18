@@ -4,7 +4,7 @@ const Skills = () => {
       institution: "Djuanda University",
       degree: "Bachelor's Degree - Computer Science",
       period: "2022 - Now",
-      isCurrent: true,
+      isCurrent: false,
     },
     {
       institution: "SMK Amaliah 1 Ciawi",
